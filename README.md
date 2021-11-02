@@ -107,5 +107,5 @@ Answer the following questions to fill in the blanks:
 - _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
 	- Update your Ansible hosts file (found at /etc/ansible/hosts) to specify different groups of machines which you would like to run the playbook on. For example, by default there is a webservers group, which should contain the IPs of your DVWA Web-VM containers which you want to install Filebeat and Metricbeat on. Additionally, we also created an [elk] group for the ELK-server, where we used to ELK-server IP in order to specify that we wanted to use the install-elk playbook on the ELK-Server VM.
 - _Which URL do you navigate to in order to check that the ELK server is running?_
-	-http://[your.ELK-VM.External.IP]:5601/app/kibana
+	- http://[your.ELK-VM.External.IP]:5601/app/kibana
 	
