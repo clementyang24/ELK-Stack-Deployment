@@ -21,7 +21,7 @@ This document contains the following details:
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
-Load balancing ensures that the application will be highly available, in addition to restricting access to the network.
+Load balancing ensures that the application will be highly available and redundant, in addition to restricting access to the network.
 - Load balancers distribute traffic between servers, ensuring that no one server is being overwhelmed with requests.
 - The purpose of the Jump Box Provisioner is to both act as a gateway, as well as holding the Ansible container with which we were able to deploy ansible playbooks; specifically installing the DVWA containers, metricbeat, and filebeat on each DVWA VM, as well as the ELK Stack container on the ELK-Server VM.
 
