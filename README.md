@@ -97,14 +97,15 @@ SSH into the control node and follow the steps below:
 - Update the playbook file to include the latest version of filebeat/metricbeat, and the hosts group you wish to install the beats to.
 - Run the playbook, and navigate your Kibana dashboard to check that the installation worked as expected.
 
-Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?
+Answer the following questions to fill in the blanks:
+- _Which file is the playbook? Where do you copy it?_
+
 	- [Ansible Filebeat Playbook](https://github.com/clementyang24/ELK-Stack-Deployment/blob/a5c8dfd26deb1bcfcf1e7354970d095992db8883/Ansible/filebeat-playbook.yml)
 	- [Ansible Metricbeat Playbook](https://github.com/clementyang24/ELK-Stack-Deployment/blob/a5c8dfd26deb1bcfcf1e7354970d095992db8883/Ansible/metricbeat-playbook.yml)
 	- Copy these to your /etc/ansible/roles directory within your Ansible container.
 
 - _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
 	- Update your Ansible hosts file to specify different groups of machines which you would like to run the playbook on. For example, by default there is a webservers group, which should contain the IPs of your DVWA Web-VM containers which you want to install Filebeat and Metricbeat on. Additionally, we also created an [elk] group for the ELK-server, where we used to ELK-server IP in order to specify that we wanted to use the install-elk playbook on the ELK-Server VM.
-- _Which URL do you navigate to in order to check that the ELK server is running?
-	-[Access Kibana App](http://[your.ELK-VM.External.IP]:5601/app/kibana)
+- _Which URL do you navigate to in order to check that the ELK server is running?_
+	-http://[your.ELK-VM.External.IP]:5601/app/kibana
 	
