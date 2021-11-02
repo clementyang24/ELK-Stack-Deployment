@@ -9,7 +9,7 @@ These files have been tested and used to generate a live ELK deployment on Azure
 - [Ansible Filebeat Playbook](https://github.com/clementyang24/ELK-Stack-Deployment/blob/a5c8dfd26deb1bcfcf1e7354970d095992db8883/Ansible/filebeat-playbook.yml)
 
 This document contains the following details:
-- Description of the Topologu
+- Description of the Topology
 - Access Policies
 - ELK Configuration
   - Beats in Use
@@ -23,7 +23,7 @@ The main purpose of this network is to expose a load-balanced and monitored inst
 
 Load balancing ensures that the application will be highly available, in addition to restricting access to the network.
 - Load balancers distribute traffic between servers, ensuring that no one server is being overwhelmed with requests.
-- The purpose of the Jump Box Provisioner is to both act as a gateway, as well as holding the Ansible container with which we were able to deploy ansible playbooks with, specifically installing the DVWA containers, metricbeat, and filebeat on each DVWA VM, as well as the ELK Stack container on the ELK-Server VM.
+- The purpose of the Jump Box Provisioner is to both act as a gateway, as well as holding the Ansible container with which we were able to deploy ansible playbooks; specifically installing the DVWA containers, metricbeat, and filebeat on each DVWA VM, as well as the ELK Stack container on the ELK-Server VM.
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the data and system logs.
 - Filebeat monitors log files, collects log events, and then passes them on to elasticsearch for indexing purposes.
@@ -48,6 +48,7 @@ Only the Jump-Box-Provisioner machine can accept connections from the Internet. 
 
 Machines within the network can only be accessed by the Jump Box Provisioner.
 - The Elk-VM is accessible via SSH from the Jump Box Provisioner, and also from the user's home workstation in order to access the Kibana application via Port 5601.
+- The DWVA machines are accessible via HTTP from the user's workstation, but only through the load balancer.
 
 A summary of the access policies in place can be found in the table below.
 
@@ -67,7 +68,7 @@ The playbook implements the following tasks:
 - Install docker.io
 - Install python3-pip
 - Install docker module
-- Increase the amount of virtual memory and uses that additional memory
+- Increase the amount of virtual memory and uses that additional memory, by setting the vm.max_map_count to 262144.
 - Download and launch the docker elk container
 - Uses systemd to enable docker service on boot, so that docker does not require restart every time the machine restarts.
 
@@ -86,7 +87,7 @@ We have installed the following Beats on these machines:
 - Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- Filebeat allows us to collect system logs. For example, Windows event logs are collected by Filebeat and then shipped on to elasticsearch.
+- Filebeat allows us to collect system logs. For example, Filebeat's auditd module is able to parse logs from Linux's audit daemon, and then ship them on to elasticsearch.
 - Metricbeat monitors and collects system metric information. One example of this is Metricbeat's Apache module, which periodically collects metrics from Apache HTTPD servers.
 
 ### Using the Playbook
@@ -95,17 +96,16 @@ In order to use the playbook, you will need to have an Ansible control node alre
 SSH into the control node and follow the steps below:
 - Copy the playbook file to /etc/ansible/roles.
 - Update the playbook file to include the latest version of filebeat/metricbeat, and the hosts group you wish to install the beats to.
-- Run the playbook, and navigate your Kibana dashboard to check that the installation worked as expected.
+- Run the playbook, and navigate to your Kibana dashboard to check that the installation worked as expected.
 
 Answer the following questions to fill in the blanks:
 - _Which file is the playbook? Where do you copy it?_
-
 	- [Ansible Filebeat Playbook](https://github.com/clementyang24/ELK-Stack-Deployment/blob/a5c8dfd26deb1bcfcf1e7354970d095992db8883/Ansible/filebeat-playbook.yml)
 	- [Ansible Metricbeat Playbook](https://github.com/clementyang24/ELK-Stack-Deployment/blob/a5c8dfd26deb1bcfcf1e7354970d095992db8883/Ansible/metricbeat-playbook.yml)
 	- Copy these to your /etc/ansible/roles directory within your Ansible container.
 
 - _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-	- Update your Ansible hosts file to specify different groups of machines which you would like to run the playbook on. For example, by default there is a webservers group, which should contain the IPs of your DVWA Web-VM containers which you want to install Filebeat and Metricbeat on. Additionally, we also created an [elk] group for the ELK-server, where we used to ELK-server IP in order to specify that we wanted to use the install-elk playbook on the ELK-Server VM.
+	- Update your Ansible hosts file (found at /etc/ansible/hosts) to specify different groups of machines which you would like to run the playbook on. For example, by default there is a webservers group, which should contain the IPs of your DVWA Web-VM containers which you want to install Filebeat and Metricbeat on. Additionally, we also created an [elk] group for the ELK-server, where we used to ELK-server IP in order to specify that we wanted to use the install-elk playbook on the ELK-Server VM.
 - _Which URL do you navigate to in order to check that the ELK server is running?_
 	-http://[your.ELK-VM.External.IP]:5601/app/kibana
 	
